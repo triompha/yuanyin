@@ -24,5 +24,10 @@ public class NewsControler {
     public @ResponseBody List<News> down(@PathVariable Integer sid,@PathVariable Integer size) {
         return newsService.listDownNews(sid, size);
     }
+    
+    @RequestMapping("/news/down/{size}")
+    public @ResponseBody List<News> top(@PathVariable Integer size) {
+        return newsService.listTop(size);
+    }
 
 }

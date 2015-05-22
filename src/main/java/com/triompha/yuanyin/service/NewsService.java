@@ -33,6 +33,11 @@ public class NewsService {
        return hibernateTemplate.find("from News where srcId<"+srcId+" order by srcId desc"); 
     }
     
+    public  List<News> listTop( int size){
+        hibernateTemplate.setMaxResults(size);  
+        return hibernateTemplate.find("from News order by srcId desc"); 
+     }
+    
     public int insert(int srcId ,String title ,String content){
        News news = new News();
        news.setContent(content);
