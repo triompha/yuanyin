@@ -9,8 +9,12 @@ import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.HttpStatus;
 import org.apache.http.client.HttpClient;
+import org.apache.http.client.config.RequestConfig;
 import org.apache.http.client.methods.HttpGet;
+import org.apache.http.conn.ClientConnectionManager;
 import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.params.CoreConnectionPNames;
+import org.apache.http.params.HttpParams;
 import org.apache.http.util.EntityUtils;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -97,9 +101,14 @@ public class NewsWorm extends TimerTask {
 	 */
 	public static String getHtmlByUrl(String url) {
 		String html = null;
-		HttpClient httpClient = new DefaultHttpClient();// 创建httpClient对象
+		
+		RequestConfig requestConfig = RequestConfig.custom().
+		        setSocketTimeout(1000).setConnectTimeout(1000).build();	
+		HttpClient httpClient = new  DefaultHttpClient();
+		
 		HttpGet httpget = new HttpGet(url);// 以get方式请求该URL
 		try {
+		    httpget.setConfig(requestConfig);
 			HttpResponse responce = httpClient.execute(httpget);// 得到responce对象
 			int resStatu = responce.getStatusLine().getStatusCode();// 返回码
 			if (resStatu == HttpStatus.SC_OK) {// 200正常 其他就不对
