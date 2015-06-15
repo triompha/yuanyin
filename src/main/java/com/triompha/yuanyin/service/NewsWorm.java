@@ -105,7 +105,8 @@ public class NewsWorm extends TimerTask {
 		RequestConfig requestConfig = RequestConfig.custom().
 		        setSocketTimeout(1000).setConnectTimeout(1000).build();	
 		HttpClient httpClient = new  DefaultHttpClient();
-		
+		httpClient.getParams().setIntParameter(CoreConnectionPNames.SO_TIMEOUT, 1000);	
+		httpClient.getParams().setIntParameter(CoreConnectionPNames.CONNECTION_TIMEOUT, 1000);	
 		HttpGet httpget = new HttpGet(url);// 以get方式请求该URL
 		try {
 		    httpget.setConfig(requestConfig);
